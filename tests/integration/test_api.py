@@ -107,7 +107,10 @@ class TestListOperations:
 
     def test_update_nonexistent_list(self, api_base_url):
         """Test updating a list that doesn't exist."""
-        response = requests.put(f"{api_base_url}/550e8400-0000-0000-0000-000000000000", json={"items": ["a", "b"]})
+        response = requests.put(
+            f"{api_base_url}/550e8400-0000-0000-0000-000000000000",
+            json={"items": ["a", "b"]},
+        )
 
         assert response.status_code == 404
         data = response.json()
@@ -195,7 +198,9 @@ class TestListOperations:
 
     def test_invalid_list_id(self, api_base_url):
         """Test with invalid list ID."""
-        response = requests.put(f"{api_base_url}/invalid@id", json={"items": ["a", "b"]})
+        response = requests.put(
+            f"{api_base_url}/invalid@id", json={"items": ["a", "b"]}
+        )
 
         assert response.status_code == 400
         data = response.json()

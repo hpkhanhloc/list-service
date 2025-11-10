@@ -33,12 +33,16 @@ def validate_list_id(list_id: str) -> str:
 
     # Allow alphanumeric, hyphens, underscores
     if not re.match(r"^[a-zA-Z0-9_-]+$", list_id):
-        raise ValidationError("list_id must contain only alphanumeric characters, hyphens, and underscores")
+        raise ValidationError(
+            "list_id must contain only alphanumeric characters, hyphens, and underscores"
+        )
 
     return list_id
 
 
-def validate_n_parameter(n: Optional[str], default: int = 10, max_value: int = 100) -> int:
+def validate_n_parameter(
+    n: Optional[str], default: int = 10, max_value: int = 100
+) -> int:
     """
     Validate and parse the 'n' query parameter.
 
@@ -65,7 +69,9 @@ def validate_n_parameter(n: Optional[str], default: int = 10, max_value: int = 1
         raise ValidationError(f"Invalid parameter: n must be at least 1, got {n_int}")
 
     if n_int > max_value:
-        raise ValidationError(f"Invalid parameter: n must be at most {max_value}, got {n_int}")
+        raise ValidationError(
+            f"Invalid parameter: n must be at most {max_value}, got {n_int}"
+        )
 
     return n_int
 
@@ -95,10 +101,14 @@ def validate_items(items: Any) -> List[str]:
     validated_items = []
     for i, item in enumerate(items):
         if not isinstance(item, str):
-            raise ValidationError(f"items[{i}] must be a string, got {type(item).__name__}")
+            raise ValidationError(
+                f"items[{i}] must be a string, got {type(item).__name__}"
+            )
 
         if len(item) > 1000:
-            raise ValidationError(f"items[{i}] exceeds maximum length of 1000 characters")
+            raise ValidationError(
+                f"items[{i}] exceeds maximum length of 1000 characters"
+            )
 
         validated_items.append(item)
 

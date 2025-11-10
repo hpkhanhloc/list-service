@@ -9,7 +9,13 @@ import os
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
-from utils import create_response, create_error_response, parse_path_parameters, parse_query_parameters, parse_request_body
+from utils import (
+    create_response,
+    create_error_response,
+    parse_path_parameters,
+    parse_query_parameters,
+    parse_request_body,
+)
 
 
 class TestCreateResponse:

@@ -47,7 +47,11 @@ class TestLambdaHandler:
         """Test successful GET request."""
         from lambda_function import lambda_handler
 
-        mock_list_service.get_full_list.return_value = {"list_id": "test-list", "items": ["a", "b", "c"], "count": 3}
+        mock_list_service.get_full_list.return_value = {
+            "list_id": "test-list",
+            "items": ["a", "b", "c"],
+            "count": 3,
+        }
 
         event = {
             "httpMethod": "GET",

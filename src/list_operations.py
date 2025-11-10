@@ -40,7 +40,9 @@ class DynamoDBClient:
             item = response.get("Item")
 
             if item:
-                logger.info(f"Retrieved list '{list_id}' with {len(item.get('items', []))} items")
+                logger.info(
+                    f"Retrieved list '{list_id}' with {len(item.get('items', []))} items"
+                )
             else:
                 logger.info(f"List '{list_id}' not found")
 
@@ -65,7 +67,12 @@ class DynamoDBClient:
             existing_item = self.get_list(list_id)
 
             current_time = get_current_timestamp()
-            item = {"list_id": list_id, "items": items, "count": len(items), "updated_at": current_time}
+            item = {
+                "list_id": list_id,
+                "items": items,
+                "count": len(items),
+                "updated_at": current_time,
+            }
 
             # Preserve created_at if updating
             if existing_item:
@@ -240,7 +247,9 @@ class ListService:
             "total_count": len(items),
         }
 
-        logger.info(f"Head operation on '{list_id}': returned {len(head_items)} of {len(items)} items")
+        logger.info(
+            f"Head operation on '{list_id}': returned {len(head_items)} of {len(items)} items"
+        )
         return result
 
     def get_tail(self, list_id: str, n: int) -> Optional[Dict[str, Any]]:
@@ -269,7 +278,9 @@ class ListService:
             "total_count": len(items),
         }
 
-        logger.info(f"Tail operation on '{list_id}': returned {len(tail_items)} of {len(items)} items")
+        logger.info(
+            f"Tail operation on '{list_id}': returned {len(tail_items)} of {len(items)} items"
+        )
         return result
 
     def create_list(self, items: List[str]) -> Dict[str, Any]:

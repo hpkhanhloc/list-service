@@ -23,7 +23,9 @@ def get_logger(name: str) -> logging.Logger:
 
     if not logger.handlers:
         handler = logging.StreamHandler()
-        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
         handler.setFormatter(formatter)
         logger.addHandler(handler)
 
@@ -33,7 +35,9 @@ def get_logger(name: str) -> logging.Logger:
     return logger
 
 
-def create_response(status_code: int, body: Dict[str, Any], headers: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
+def create_response(
+    status_code: int, body: Dict[str, Any], headers: Optional[Dict[str, str]] = None
+) -> Dict[str, Any]:
     """
     Create an API Gateway response.
 
@@ -55,10 +59,16 @@ def create_response(status_code: int, body: Dict[str, Any], headers: Optional[Di
     if headers:
         default_headers.update(headers)
 
-    return {"statusCode": status_code, "headers": default_headers, "body": json.dumps(body, default=str)}
+    return {
+        "statusCode": status_code,
+        "headers": default_headers,
+        "body": json.dumps(body, default=str),
+    }
 
 
-def create_error_response(status_code: int, error_type: str, message: str) -> Dict[str, Any]:
+def create_error_response(
+    status_code: int, error_type: str, message: str
+) -> Dict[str, Any]:
     """
     Create an error response.
 
@@ -70,7 +80,9 @@ def create_error_response(status_code: int, error_type: str, message: str) -> Di
     Returns:
         API Gateway error response
     """
-    return create_response(status_code=status_code, body={"error": error_type, "message": message})
+    return create_response(
+        status_code=status_code, body={"error": error_type, "message": message}
+    )
 
 
 def get_current_timestamp() -> str:

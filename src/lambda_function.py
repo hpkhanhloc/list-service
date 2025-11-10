@@ -7,7 +7,13 @@ import traceback
 from typing import Dict, Any
 
 from list_operations import DynamoDBClient, ListService
-from validators import ValidationError, validate_list_id, validate_n_parameter, validate_items, validate_request_body
+from validators import (
+    ValidationError,
+    validate_list_id,
+    validate_n_parameter,
+    validate_items,
+    validate_request_body,
+)
 from utils import (
     get_logger,
     create_response,
@@ -40,7 +46,9 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     http_method = event.get("httpMethod", "UNKNOWN")
     resource_path = event.get("resource", "UNKNOWN")
 
-    logger.info(f"Request started - ID: {request_id}, Method: {http_method}, Path: {resource_path}")
+    logger.info(
+        f"Request started - ID: {request_id}, Method: {http_method}, Path: {resource_path}"
+    )
 
     try:
         # Parse parameters
@@ -59,17 +67,25 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         else:
             logger.warning(f"Unknown resource path: {resource_path}")
             return create_error_response(
-                status_code=404, error_type="NotFound", message=f"Resource not found: {resource_path}"
+                status_code=404,
+                error_type="NotFound",
+                message=f"Resource not found: {resource_path}",
             )
 
     except ValidationError as e:
         logger.warning(f"Validation error: {str(e)}")
-        return create_error_response(status_code=400, error_type="BadRequest", message=str(e))
+        return create_error_response(
+            status_code=400, error_type="BadRequest", message=str(e)
+        )
 
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}")
         logger.error(traceback.format_exc())
-        return create_error_response(status_code=500, error_type="InternalServerError", message="An unexpected error occurred")
+        return create_error_response(
+            status_code=500,
+            error_type="InternalServerError",
+            message="An unexpected error occurred",
+        )
 
     finally:
         logger.info(f"Request completed - ID: {request_id}")
@@ -93,11 +109,15 @@ def handle_lists_collection(event: Dict[str, Any]) -> Dict[str, Any]:
         return post_list(event)
     else:
         return create_error_response(
-            status_code=405, error_type="MethodNotAllowed", message=f"Method {http_method} not allowed"
+            status_code=405,
+            error_type="MethodNotAllowed",
+            message=f"Method {http_method} not allowed",
         )
 
 
-def handle_list_operations(event: Dict[str, Any], path_params: Dict[str, str], query_params: Dict[str, str]) -> Dict[str, Any]:
+def handle_list_operations(
+    event: Dict[str, Any], path_params: Dict[str, str], query_params: Dict[str, str]
+) -> Dict[str, Any]:
     """
     Handle operations on /lists/{list_id} endpoint.
 
@@ -120,7 +140,9 @@ def handle_list_operations(event: Dict[str, Any], path_params: Dict[str, str], q
         return delete_list(list_id)
     else:
         return create_error_response(
-            status_code=405, error_type="MethodNotAllowed", message=f"Method {http_method} not allowed"
+            status_code=405,
+            error_type="MethodNotAllowed",
+            message=f"Method {http_method} not allowed",
         )
 
 
@@ -139,7 +161,11 @@ def get_list(list_id: str) -> Dict[str, Any]:
     list_data = list_service.get_full_list(list_id)
 
     if not list_data:
-        return create_error_response(status_code=404, error_type="NotFound", message=f"List '{list_id}' not found")
+        return create_error_response(
+            status_code=404,
+            error_type="NotFound",
+            message=f"List '{list_id}' not found",
+        )
 
     return create_response(status_code=200, body=list_data)
 
@@ -164,7 +190,11 @@ def put_list(event: Dict[str, Any], list_id: str) -> Dict[str, Any]:
     result = list_service.update_list(list_id, items)
 
     if not result:
-        return create_error_response(status_code=404, error_type="NotFound", message=f"List '{list_id}' not found")
+        return create_error_response(
+            status_code=404,
+            error_type="NotFound",
+            message=f"List '{list_id}' not found",
+        )
 
     return create_response(status_code=200, body=result)
 
@@ -184,7 +214,11 @@ def delete_list(list_id: str) -> Dict[str, Any]:
     deleted = list_service.delete_list(list_id)
 
     if not deleted:
-        return create_error_response(status_code=404, error_type="NotFound", message=f"List '{list_id}' not found")
+        return create_error_response(
+            status_code=404,
+            error_type="NotFound",
+            message=f"List '{list_id}' not found",
+        )
 
     return create_response(status_code=204, body={})
 
@@ -224,7 +258,9 @@ def post_list(event: Dict[str, Any]) -> Dict[str, Any]:
     return create_response(status_code=201, body=result)
 
 
-def handle_head_operation(path_params: Dict[str, str], query_params: Dict[str, str]) -> Dict[str, Any]:
+def handle_head_operation(
+    path_params: Dict[str, str], query_params: Dict[str, str]
+) -> Dict[str, Any]:
     """
     Handle GET /lists/{list_id}/head.
 
@@ -243,12 +279,18 @@ def handle_head_operation(path_params: Dict[str, str], query_params: Dict[str, s
     result = list_service.get_head(list_id, n)
 
     if not result:
-        return create_error_response(status_code=404, error_type="NotFound", message=f"List '{list_id}' not found")
+        return create_error_response(
+            status_code=404,
+            error_type="NotFound",
+            message=f"List '{list_id}' not found",
+        )
 
     return create_response(status_code=200, body=result)
 
 
-def handle_tail_operation(path_params: Dict[str, str], query_params: Dict[str, str]) -> Dict[str, Any]:
+def handle_tail_operation(
+    path_params: Dict[str, str], query_params: Dict[str, str]
+) -> Dict[str, Any]:
     """
     Handle GET /lists/{list_id}/tail.
 
@@ -267,6 +309,10 @@ def handle_tail_operation(path_params: Dict[str, str], query_params: Dict[str, s
     result = list_service.get_tail(list_id, n)
 
     if not result:
-        return create_error_response(status_code=404, error_type="NotFound", message=f"List '{list_id}' not found")
+        return create_error_response(
+            status_code=404,
+            error_type="NotFound",
+            message=f"List '{list_id}' not found",
+        )
 
     return create_response(status_code=200, body=result)

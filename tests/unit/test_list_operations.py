@@ -29,7 +29,11 @@ class TestListService:
 
     def test_get_full_list_found(self, list_service, mock_db_client):
         """Test getting a list that exists."""
-        mock_db_client.get_list.return_value = {"list_id": "test-list", "items": ["a", "b", "c"], "count": 3}
+        mock_db_client.get_list.return_value = {
+            "list_id": "test-list",
+            "items": ["a", "b", "c"],
+            "count": 3,
+        }
 
         result = list_service.get_full_list("test-list")
 
@@ -49,7 +53,11 @@ class TestListService:
 
     def test_get_head(self, list_service, mock_db_client):
         """Test head operation."""
-        mock_db_client.get_list.return_value = {"list_id": "test-list", "items": ["a", "b", "c", "d", "e"], "count": 5}
+        mock_db_client.get_list.return_value = {
+            "list_id": "test-list",
+            "items": ["a", "b", "c", "d", "e"],
+            "count": 5,
+        }
 
         result = list_service.get_head("test-list", 3)
 
@@ -62,7 +70,11 @@ class TestListService:
 
     def test_get_head_n_larger_than_list(self, list_service, mock_db_client):
         """Test head operation when n is larger than list size."""
-        mock_db_client.get_list.return_value = {"list_id": "test-list", "items": ["a", "b"], "count": 2}
+        mock_db_client.get_list.return_value = {
+            "list_id": "test-list",
+            "items": ["a", "b"],
+            "count": 2,
+        }
 
         result = list_service.get_head("test-list", 10)
 
@@ -81,7 +93,11 @@ class TestListService:
 
     def test_get_tail(self, list_service, mock_db_client):
         """Test tail operation."""
-        mock_db_client.get_list.return_value = {"list_id": "test-list", "items": ["a", "b", "c", "d", "e"], "count": 5}
+        mock_db_client.get_list.return_value = {
+            "list_id": "test-list",
+            "items": ["a", "b", "c", "d", "e"],
+            "count": 5,
+        }
 
         result = list_service.get_tail("test-list", 3)
 
@@ -94,7 +110,11 @@ class TestListService:
 
     def test_get_tail_n_larger_than_list(self, list_service, mock_db_client):
         """Test tail operation when n is larger than list size."""
-        mock_db_client.get_list.return_value = {"list_id": "test-list", "items": ["a", "b"], "count": 2}
+        mock_db_client.get_list.return_value = {
+            "list_id": "test-list",
+            "items": ["a", "b"],
+            "count": 2,
+        }
 
         result = list_service.get_tail("test-list", 10)
 
@@ -150,7 +170,9 @@ class TestListService:
         result = list_service.update_list("nonexistent", ["x", "y", "z"])
 
         assert result is None
-        mock_db_client.update_list.assert_called_once_with("nonexistent", ["x", "y", "z"])
+        mock_db_client.update_list.assert_called_once_with(
+            "nonexistent", ["x", "y", "z"]
+        )
 
     def test_get_all_lists(self, list_service, mock_db_client):
         """Test getting all lists."""

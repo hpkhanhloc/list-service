@@ -9,7 +9,13 @@ import os
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
-from validators import ValidationError, validate_list_id, validate_n_parameter, validate_items, validate_request_body
+from validators import (
+    ValidationError,
+    validate_list_id,
+    validate_n_parameter,
+    validate_items,
+    validate_request_body,
+)
 
 
 class TestValidateListId:
