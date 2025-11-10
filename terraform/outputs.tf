@@ -33,11 +33,6 @@ output "cloudwatch_dashboard_name" {
   value       = aws_cloudwatch_dashboard.list_service.dashboard_name
 }
 
-output "cloudwatch_log_group_lambda" {
-  description = "CloudWatch log group for Lambda"
-  value       = aws_cloudwatch_log_group.lambda_logs.name
-}
-
 output "region" {
   description = "AWS region"
   value       = var.aws_region
