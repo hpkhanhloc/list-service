@@ -40,10 +40,11 @@ resource "aws_cloudwatch_dashboard" "list_service" {
         type = "metric"
         properties = {
           metrics = [
-            ["AWS/DynamoDB", "ConsumedReadCapacityUnits", { stat = "Sum", label = "Read Capacity" }],
-            [".", "ConsumedWriteCapacityUnits", { stat = "Sum", label = "Write Capacity" }],
-            [".", "UserErrors", { stat = "Sum", label = "User Errors" }],
-            [".", "SystemErrors", { stat = "Sum", label = "System Errors" }],
+            ["AWS/DynamoDB", "ConsumedReadCapacityUnits", "TableName", "${var.project_name}-lists", { stat = "Sum", label = "Read Capacity" }],
+            [".", "ConsumedWriteCapacityUnits", "TableName", "${var.project_name}-lists", { stat = "Sum", label = "Write Capacity" }],
+            [".", "SuccessfulRequestLatency", "TableName", "${var.project_name}-lists", { stat = "Average", label = "Latency (Avg)" }],
+            [".", "UserErrors", "TableName", "${var.project_name}-lists", { stat = "Sum", label = "User Errors" }],
+            [".", "SystemErrors", "TableName", "${var.project_name}-lists", { stat = "Sum", label = "System Errors" }],
           ]
           view    = "timeSeries"
           stacked = false

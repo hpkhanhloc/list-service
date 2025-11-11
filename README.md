@@ -599,8 +599,8 @@ aws cloudwatch describe-alarms --alarm-name-prefix "list-service"
 
 ## Future Enhancements
 
-- [ ] Authentication & Authorization (API Keys, Cognito, IAM)
-- [ ] Rate limiting per client
-- [ ] List pagination for very large lists (>10K items)
-- [ ] CI/CD pipeline (GitHub Actions, GitLab CI)
-- [ ] API caching (API Gateway caching)
+- [ ] Authentication & Authorization
+- [ ] Rate limiting
+- [ ] Pagination for very large lists
+- [ ] CI/CD automation (e.g., GitHub Actions)
+- [ ] API Gateway caching for frequently accessed data
