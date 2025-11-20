@@ -74,41 +74,41 @@ resource "aws_cloudwatch_dashboard" "list_service" {
 }
 
 # Custom metric filter for successful operations
-resource "aws_cloudwatch_log_metric_filter" "successful_operations" {
-  name           = "${var.project_name}-successful-operations"
-  log_group_name = aws_cloudwatch_log_group.lambda_logs.name
-  pattern        = "[timestamp, request_id, level=INFO, msg=\"Operation completed\", ...]"
+# resource "aws_cloudwatch_log_metric_filter" "successful_operations" {
+#   name           = "${var.project_name}-successful-operations"
+#   log_group_name = aws_cloudwatch_log_group.lambda_logs.name
+#   pattern        = "[timestamp, request_id, level=INFO, msg=\"Operation completed\", ...]"
 
-  metric_transformation {
-    name      = "SuccessfulOperations"
-    namespace = var.project_name
-    value     = "1"
-  }
-}
+#   metric_transformation {
+#     name      = "SuccessfulOperations"
+#     namespace = var.project_name
+#     value     = "1"
+#   }
+# }
 
 # Custom metric filter for head operations
-resource "aws_cloudwatch_log_metric_filter" "head_operations" {
-  name           = "${var.project_name}-head-operations"
-  log_group_name = aws_cloudwatch_log_group.lambda_logs.name
-  pattern        = "[timestamp, request_id, level, msg=\"Operation completed\", operation=head, ...]"
+# resource "aws_cloudwatch_log_metric_filter" "head_operations" {
+#   name           = "${var.project_name}-head-operations"
+#   log_group_name = aws_cloudwatch_log_group.lambda_logs.name
+#   pattern        = "[timestamp, request_id, level, msg=\"Operation completed\", operation=head, ...]"
 
-  metric_transformation {
-    name      = "HeadOperations"
-    namespace = var.project_name
-    value     = "1"
-  }
-}
+#   metric_transformation {
+#     name      = "HeadOperations"
+#     namespace = var.project_name
+#     value     = "1"
+#   }
+# }
 
 # Custom metric filter for tail operations
-resource "aws_cloudwatch_log_metric_filter" "tail_operations" {
-  name           = "${var.project_name}-tail-operations"
-  log_group_name = aws_cloudwatch_log_group.lambda_logs.name
-  pattern        = "[timestamp, request_id, level, msg=\"Operation completed\", operation=tail, ...]"
+# resource "aws_cloudwatch_log_metric_filter" "tail_operations" {
+#   name           = "${var.project_name}-tail-operations"
+#   log_group_name = aws_cloudwatch_log_group.lambda_logs.name
+#   pattern        = "[timestamp, request_id, level, msg=\"Operation completed\", operation=tail, ...]"
 
-  metric_transformation {
-    name      = "TailOperations"
-    namespace = var.project_name
-    value     = "1"
-  }
-}
+#   metric_transformation {
+#     name      = "TailOperations"
+#     namespace = var.project_name
+#     value     = "1"
+#   }
+# }
 

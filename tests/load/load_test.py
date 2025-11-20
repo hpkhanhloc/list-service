@@ -125,9 +125,7 @@ def run_load_test(base_url: str, num_requests: int, concurrent: int):
         print("Failed to get list_id from created list")
         return
 
-    print(
-        f"Test list created successfully with ID: {list_id} in {result['elapsed']:.3f}s\n"
-    )
+    print(f"Test list created successfully with ID: {list_id} in {result['elapsed']:.3f}s\n")
 
     # Run concurrent requests
     results = []
@@ -176,12 +174,8 @@ def run_load_test(base_url: str, num_requests: int, concurrent: int):
         print(f"  Max: {max(response_times)*1000:.2f}ms")
         print(f"  Mean: {statistics.mean(response_times)*1000:.2f}ms")
         print(f"  Median: {statistics.median(response_times)*1000:.2f}ms")
-        print(
-            f"  P95: {sorted(response_times)[int(len(response_times)*0.95)]*1000:.2f}ms"
-        )
-        print(
-            f"  P99: {sorted(response_times)[int(len(response_times)*0.99)]*1000:.2f}ms"
-        )
+        print(f"  P95: {sorted(response_times)[int(len(response_times)*0.95)]*1000:.2f}ms")
+        print(f"  P99: {sorted(response_times)[int(len(response_times)*0.99)]*1000:.2f}ms")
 
     # Status code distribution
     status_codes = {}
@@ -197,12 +191,8 @@ def run_load_test(base_url: str, num_requests: int, concurrent: int):
     tail_results = [r for r in results if r["operation"] == "tail"]
 
     print(f"\nOperation Breakdown:")
-    print(
-        f"  Head: {len(head_results)} ({len([r for r in head_results if r['success']])} successful)"
-    )
-    print(
-        f"  Tail: {len(tail_results)} ({len([r for r in tail_results if r['success']])} successful)"
-    )
+    print(f"  Head: {len(head_results)} ({len([r for r in head_results if r['success']])} successful)")
+    print(f"  Tail: {len(tail_results)} ({len([r for r in tail_results if r['success']])} successful)")
 
     print(f"\n{'='*60}\n")
 
@@ -214,22 +204,20 @@ def main():
         "--requests",
         type=int,
         default=50,
-        help="Number of requests to make (default: 100)",
+        help="Number of requests to make (default: 50)",
     )
     parser.add_argument(
         "--concurrent",
         type=int,
         default=5,
-        help="Number of concurrent requests (default: 10)",
+        help="Number of concurrent requests (default: 5)",
     )
 
     args = parser.parse_args()
 
     if not API_ENDPOINT:
         print("Error: API_ENDPOINT environment variable not set")
-        print(
-            "Example: export API_ENDPOINT='https://xxxxx.execute-api.us-east-1.amazonaws.com/prod'"
-        )
+        print("Example: export API_ENDPOINT='https://xxxxx.execute-api.us-east-1.amazonaws.com/prod'")
         return 1
 
     run_load_test(API_ENDPOINT, args.requests, args.concurrent)
